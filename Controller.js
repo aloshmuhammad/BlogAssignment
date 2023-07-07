@@ -18,9 +18,9 @@ const controller = {
     }
   },
   getBlog: async (req, res, next) => {
-    const Id = req.params.id;
+    const {id} = req.params;
 
-    const data = await Blog.findById(Id);
+    const data = await Blog.findById(id);
     if (!data) {
       res.status(404).json({ error: "Blog not found" });
     } else {
@@ -29,17 +29,18 @@ const controller = {
   },
   getAllblogs: async (req, res, next) => {
     const allBlogs = await Blog.find();
+    console.log(allBlogs,'po')
 
     res.status(200).json(allBlogs);
   },
   updateBlog: async (req, res, next) => {
-    const Id = req.params.id;
+    const {id} = req.params;
     const updateBody = {
       blogName: "BINOY",
       category: "TECH",
       content: "Hello Node Developer",
     };
-    const updatedBlog = await Blog.findByIdAndUpdate(Id, updateBody, {
+    const updatedBlog = await Blog.findByIdAndUpdate(id, updateBody, {
       new: true,
     });
     if (!updatedBlog) {
@@ -49,8 +50,8 @@ const controller = {
     }
   },
   deleteBlog: async (req, res, next) => {
-    const Id = req.params.id;
-    await Blog.deleteOne({ _id: Id });
+    const {id} = req.params;
+    await Blog.deleteOne({ _id: id });
     res.status(200).json({ message: "Blog deleted successfully" });
   },
 };

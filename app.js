@@ -3,11 +3,7 @@ import connection from "./connection.js";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import controller from "./Controller.js";
-import {
-  createBlogValidation,
-  blogValidationWithid,
-  validate,
-} from "./Validation.js";
+import { createBlogValidation,blogValidationWithId, validate } from "./Validation.js";
 
 const app = express();
 const router = express.Router();
@@ -24,18 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 connection();
 
 //Routes
-router.post("/add-posts", createBlogValidation, validate, controller.addBlog);
-router.get("/posts/:id", blogValidationWithid, validate, controller.getBlog);
+router.post("/add-posts",  controller.addBlog);
+router.get("/posts/:id",blogValidationWithId(), controller.getBlog);
 router.get("/all-posts", controller.getAllblogs);
-router.put(
-  "/edit-post/:id",
-  blogValidationWithid,
-  validate,
-  controller.updateBlog
-);
-router.delete(
-  "/delete-post/:id",
-  blogValidationWithid,
-  validate,
-  controller.deleteBlog
-);
+router.put("/edit-post/:id",blogValidationWithId(),validate ,controller.updateBlog);
+router.delete("/delete-post/:id",blogValidationWithId(),validate, controller.deleteBlog);
